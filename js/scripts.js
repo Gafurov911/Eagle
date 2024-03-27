@@ -1,0 +1,81 @@
+// Скрипты для Тестов
+// Таргет основных блоков и кнопок
+const start_btn = document.querySelector('.statr__test_button')
+const choose__test = document.querySelector('.choose__test')
+const start__test = document.querySelector('.start__test')
+const statr__tests = start__test.querySelector('.statr__tests') // блок ответы тестов
+
+// Привязка к кнопке функцию при клыке
+start_btn.addEventListener("click", function () {
+    choose__test.style.display = 'none'
+    start__test.style.display = 'flex'
+    showQuestions(0)
+});
+
+// начальное количесво тестов
+let que_count = 0
+// let que_icons = 0
+// кнопка следующий тест при нажатии next_btn
+let next_btn = start__test.querySelector('.btn__test_next')
+next_btn.addEventListener("click", function () {
+    if (que_count < questions.length - 1) {
+        que_count++
+        // que_icons++
+        showQuestions(que_count)
+        next_btn.style.pointerEvents = "none"
+    } else {
+        console.log('Questions completed')
+    }
+});
+
+
+// Функция для добавление тестов в блоках при нажатии start_btn
+function showQuestions(index) {
+    const test__info = start__test.querySelector('.test__info') // блок вопросы тестов
+
+    // Добавление тестов
+    let test__title = '<h1 class="test__title">' + questions[index].question + '</h1>'
+    let tests = '<button class="btn__test_one">' + questions[index].icons[0] + '<p class="btn__text">' + questions[index].options[0] + '</p></button>'
+        + '<button class="btn__test_one">' + questions[index].icons[1] + '<p class="btn__text">' + questions[index].options[1] + '</p></button>'
+        + '<button class="btn__test_one">' + questions[index].icons[2] + '<p class="btn__text">' + questions[index].options[2] + '</p></button>'
+    test__info.innerHTML = test__title
+    statr__tests.innerHTML = tests
+
+    // отслеживание выранной пользователем ответа
+    const btn__test_one = statr__tests.querySelectorAll('.btn__test_one')
+    for (let i = 0; i < btn__test_one.length; i++) {
+        btn__test_one[i].setAttribute("onclick", "optionSelected(this)")
+    }
+}
+
+// проверка на правилность ответа
+function optionSelected(answer) {
+    let userAnswer = answer.textContent
+    let correctAnswer = questions[que_count].answer
+    let allOptions = statr__tests.children.length
+    if (userAnswer == correctAnswer) {
+        answer.classList.add('correct')
+        console.log('Answer ic Correct')
+    } else {
+        answer.classList.add('incorrect')
+        console.log('Answer ic Wrong')
+
+        // если ответ не правилный то автоматом выбераем правилный
+        for (let i = 0; i < allOptions; i++) {
+            if (statr__tests.children[i].textContent == correctAnswer) {
+                statr__tests.children[i].setAttribute("class", "btn__test_one correct")
+            }
+        }
+    }
+    next_btn.style.pointerEvents = "auto"
+
+    // при выборе ответа отключаем выбор другого 
+    for (let i = 0; i < allOptions; i++) {
+        statr__tests.children[i].classList.add('disabled')
+    }
+}
+
+
+const statr_button = document.querySelector('.statr__button').onclick = function () {
+    location.href = "./main.html";
+};

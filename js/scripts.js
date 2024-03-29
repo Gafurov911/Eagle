@@ -5,7 +5,19 @@ const choose__test = document.querySelector('.choose__test')
 const start__test = document.querySelector('.start__test')
 const statr__tests = start__test.querySelector('.statr__tests') // блок ответы тестов
 
-// Привязка к кнопке функцию при клыке
+// Таргет основных блоков и кнопок Рузультата
+const results = document.querySelector('.results')
+const restart = results.querySelector('.restart')
+const exit = results.querySelector('.exit').onclick = () => window.location.reload()
+restart.onclick = () => {
+    choose__test.style.display = 'none'
+    start__test.style.display = 'flex'
+    results.classList.remove('module__one')    
+    showQuestions(0)    
+}
+
+
+// START START Привязка к кнопке функцию при клыке
 start_btn.addEventListener("click", function () {
     choose__test.style.display = 'none'
     start__test.style.display = 'flex'
@@ -14,8 +26,10 @@ start_btn.addEventListener("click", function () {
 
 // начальное количесво тестов
 let que_count = 0
+let resultScore = 0
 // let que_icons = 0
-// кнопка следующий тест при нажатии next_btn
+
+// NEXT NEXT следующий тест при нажатии next_btn
 let next_btn = start__test.querySelector('.btn__test_next')
 next_btn.addEventListener("click", function () {
     if (que_count < questions.length - 1) {
@@ -25,6 +39,7 @@ next_btn.addEventListener("click", function () {
         next_btn.style.pointerEvents = "none"
     } else {
         console.log('Questions completed')
+        showResultbox()
     }
 });
 
@@ -41,7 +56,7 @@ function showQuestions(index) {
     test__info.innerHTML = test__title
     statr__tests.innerHTML = tests
 
-    // отслеживание выранной пользователем ответа
+    // отслеживание выбранной пользователем ответа
     const btn__test_one = statr__tests.querySelectorAll('.btn__test_one')
     for (let i = 0; i < btn__test_one.length; i++) {
         btn__test_one[i].setAttribute("onclick", "optionSelected(this)")
@@ -54,8 +69,10 @@ function optionSelected(answer) {
     let correctAnswer = questions[que_count].answer
     let allOptions = statr__tests.children.length
     if (userAnswer == correctAnswer) {
+        resultScore += 1
         answer.classList.add('correct')
         console.log('Answer ic Correct')
+        console.log(resultScore)
     } else {
         answer.classList.add('incorrect')
         console.log('Answer ic Wrong')
@@ -75,7 +92,20 @@ function optionSelected(answer) {
     }
 }
 
+function showResultbox() {
+    choose__test.style.display = 'none'
+    start__test.style.display = 'none'
+    results.classList.add('module__one')
+    const resultInfo = results.querySelector('.module__status_active')
+    if (resultScore >= 0) {
+        let resulthtml = `<span class="status__active">`+ resultScore +` / `+ questions.length +`</span>`
+        resultInfo.insertAdjacentHTML('beforeend', resulthtml)
+    }
+}
 
+
+
+// кнопка without test
 const statr_button = document.querySelector('.statr__button').onclick = function () {
     location.href = "./main.html";
 };

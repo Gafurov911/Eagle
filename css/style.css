@@ -351,7 +351,72 @@ body {
    
 }
 
+/* --------------RESULT------------------- */
+.results {
+    display: none;
+}
+.module__one {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-around;   
+    width: 70%;
+    height: 250px;
+    background-color: rgba(253, 113, 20, 0.79);
+    color: #fff;
+    border: 1px solid black;
+    border-radius: 39px;
+    padding: 25px 143px;
+    position: relative;
+}
+.module__title {
+    font-size: 34px;
+}
+.module__status_active {
+    display: flex;
+    position: relative;
+    width: 367px;
+    height: 15px;
+    border-radius: 10px;
+    border: 1px solid white;
+}
+.module__status_line {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;    
+    width: 30%; 
+    height: 100%; 
+    border-radius: 10px;
+    background-color: #58FC55;
+}
+.status__active {
+    position: absolute;
+    top: -10px;  
+    right: -70px;
+}
+.module__btn {
+    background-color: #fff;
+    padding: 15px 40px;
+    border: none;
+    border-radius: 22px;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 700;
+    color: #FD7014;
+    cursor: pointer;
+}
+.module__btn:hover {
+    background-color: #ffffffd3;
+}
+.module__icon {
+    position: absolute;
+    top: 40px;
+    right: 25px;
+}
+/* ------------------------------------------- */
 
 
 
-/* -------------------------------------------- */
+
+
+

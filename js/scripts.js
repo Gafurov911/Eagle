@@ -4,45 +4,52 @@ const start_btn = document.querySelector('.statr__test_button')
 const choose__test = document.querySelector('.choose__test')
 const start__test = document.querySelector('.start__test')
 const statr__tests = start__test.querySelector('.statr__tests') // блок ответы тестов
-
+const moduleStatus = document.querySelector('.module__status_line')
 // Таргет основных блоков и кнопок Рузультата
 const results = document.querySelector('.results')
-const restart = results.querySelector('.restart')
-const exit = results.querySelector('.exit').onclick = () => window.location.reload()
-restart.onclick = () => {
-    choose__test.style.display = 'none'
-    start__test.style.display = 'flex'
-    results.classList.remove('module__one')    
-    showQuestions(0)    
-}
-
 
 // START START Привязка к кнопке функцию при клыке
-start_btn.addEventListener("click", function () {
+start_btn.onclick = ()=>{
     choose__test.style.display = 'none'
     start__test.style.display = 'flex'
     showQuestions(0)
-});
+};
 
 // начальное количесво тестов
 let que_count = 0
 let resultScore = 0
 // let que_icons = 0
 
+const restart = results.querySelector('.restart')
+const exit = results.querySelector('.exit')
+// module__status_active
+restart.onclick = () => {
+    start__test.style.display = 'flex'
+    choose__test.style.display = 'none'
+    results.classList.remove('module__one')
+    const resultInfo = results.querySelector('.module__status_active')
+    resultInfo.lastChild.remove()
+    que_count = 0
+    resultScore = 0
+    showQuestions(0)
+}
+exit.onclick = ()=>{
+    window.location.reload(); //reload the current window
+}
+
 // NEXT NEXT следующий тест при нажатии next_btn
-let next_btn = start__test.querySelector('.btn__test_next')
-next_btn.addEventListener("click", function () {
+const next_btn = start__test.querySelector('.btn__test_next')
+next_btn.onclick = ()=>{
     if (que_count < questions.length - 1) {
         que_count++
         // que_icons++
         showQuestions(que_count)
         next_btn.style.pointerEvents = "none"
     } else {
-        console.log('Questions completed')
+        // console.log('Questions completed')
         showResultbox()
     }
-});
-
+};
 
 // Функция для добавление тестов в блоках при нажатии start_btn
 function showQuestions(index) {
@@ -67,29 +74,28 @@ function showQuestions(index) {
 function optionSelected(answer) {
     let userAnswer = answer.textContent
     let correctAnswer = questions[que_count].answer
-    let allOptions = statr__tests.children.length
+    const allOptions = statr__tests.children.length
     if (userAnswer == correctAnswer) {
         resultScore += 1
         answer.classList.add('correct')
-        console.log('Answer ic Correct')
-        console.log(resultScore)
+        console.log('Answer is Correct')
+        console.log("Correct answers = " + resultScore)
     } else {
         answer.classList.add('incorrect')
-        console.log('Answer ic Wrong')
+        console.log('Answer is Wrong')
 
         // если ответ не правилный то автоматом выбераем правилный
-        for (let i = 0; i < allOptions; i++) {
+        for (i = 0; i < allOptions; i++) {
             if (statr__tests.children[i].textContent == correctAnswer) {
-                statr__tests.children[i].setAttribute("class", "btn__test_one correct")
+                statr__tests.children[i].setAttribute("class", "btn__test_one correct")               
             }
         }
-    }
-    next_btn.style.pointerEvents = "auto"
-
+    }    
     // при выборе ответа отключаем выбор другого 
-    for (let i = 0; i < allOptions; i++) {
+    for (i = 0; i < allOptions; i++) {
         statr__tests.children[i].classList.add('disabled')
     }
+    next_btn.style.pointerEvents = "auto"
 }
 
 function showResultbox() {
@@ -101,9 +107,12 @@ function showResultbox() {
         let resulthtml = `<span class="status__active">`+ resultScore +` / `+ questions.length +`</span>`
         resultInfo.insertAdjacentHTML('beforeend', resulthtml)
     }
+   
+    let statusLine = resultScore * (100 / questions.length)
+    console.log(statusLine);
+    console.log(moduleStatus);
+    moduleStatus.style.width = statusLine + '%'
 }
-
-
 
 // кнопка without test
 const statr_button = document.querySelector('.statr__button').onclick = function () {

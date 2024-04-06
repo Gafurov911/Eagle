@@ -54,7 +54,6 @@ next_btn.onclick = ()=>{
 // Функция для добавление тестов в блоках при нажатии start_btn
 function showQuestions(index) {
     const test__info = start__test.querySelector('.test__info') // блок вопросы тестов
-
     // Добавление тестов
     let test__title = '<h1 class="test__title">' + questions[index].question + '</h1>'
     let tests = '<button class="btn__test_one">' + questions[index].icons[0] + '<p class="btn__text">' + questions[index].options[0] + '</p></button>'
@@ -83,7 +82,7 @@ function optionSelected(answer) {
     } else {
         answer.classList.add('incorrect')
         console.log('Answer is Wrong')
-
+        
         // если ответ не правилный то автоматом выбераем правилный
         for (i = 0; i < allOptions; i++) {
             if (statr__tests.children[i].textContent == correctAnswer) {

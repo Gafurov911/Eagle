@@ -325,7 +325,8 @@ body {
     font-weight: 600;
 }
 
-.btn__test_next {
+.btn__test_next,
+.btn__vies_results {
     pointer-events: none;
     width: 234px;
     height: 66px;
@@ -339,7 +340,8 @@ body {
     cursor: pointer;
     outline: none;
 }
-.btn__test_next:hover{
+.btn__test_next:hover,
+.btn__vies_results:hover{
     background-color: #FD7014;
 }
 
@@ -379,24 +381,27 @@ body {
     height: 15px;
     border-radius: 10px;
     border: 1px solid white;
-    transition: all 5s ease; 
+    
 }
 .module__status_line {
     display: flex;
     align-items: center;
-    justify-content: flex-end;    
+    justify-content: flex-end;
+    width: 0%;    
     height: 100%; 
     border-radius: 10px;
     background-color: #58FC55;
-    transition: all 5s ease; 
+    transition: 5s; 
 }
 .status__active {
     position: absolute;
     top: -10px;  
     right: -70px;
-    transition: all 5s ease; 
+    transition: 5s; 
 }
-
+.status__icons {
+    transition: 5s; 
+}
 .module__btn {
     background-color: #fff;
     padding: 15px 40px;

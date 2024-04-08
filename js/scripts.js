@@ -4,12 +4,13 @@ const start_btn = document.querySelector('.statr__test_button')
 const choose__test = document.querySelector('.choose__test')
 const start__test = document.querySelector('.start__test')
 const statr__tests = start__test.querySelector('.statr__tests') // блок ответы тестов
-const moduleStatus = document.querySelector('.module__status_line')
+// const moduleStatus = document.querySelector('.module__status_line')
 // Таргет основных блоков и кнопок Рузультата
-const results = document.querySelector('.results')
+// const results = document.querySelector('.results')
+const btn__vies_results = document.querySelector('.btn__vies_results')
 
 // START START Привязка к кнопке функцию при клыке
-start_btn.onclick = ()=>{
+start_btn.onclick = () => {
     choose__test.style.display = 'none'
     start__test.style.display = 'flex'
     showQuestions(0)
@@ -20,26 +21,27 @@ let que_count = 0
 let resultScore = 0
 // let que_icons = 0
 
-const restart = results.querySelector('.restart')
-const exit = results.querySelector('.exit')
-// module__status_active
-restart.onclick = () => {
-    start__test.style.display = 'flex'
-    choose__test.style.display = 'none'
-    results.classList.remove('module__one')
-    const resultInfo = results.querySelector('.module__status_active')
-    resultInfo.lastChild.remove()
-    que_count = 0
-    resultScore = 0
-    showQuestions(0)
-}
-exit.onclick = ()=>{
-    window.location.reload(); //reload the current window
-}
+// const restart = results.querySelector('.restart')
+// const exit = results.querySelector('.exit')
+
+// restart.onclick = () => {
+//     start__test.style.display = 'flex'
+//     choose__test.style.display = 'none'
+//     results.classList.remove('module__one')
+//     const resultInfo = results.querySelector('.module__status_active')
+//     resultInfo.lastChild.remove() // удаляем старый текст результата
+//     que_count = 0
+//     resultScore = 0
+//     showQuestions(0)
+//     next_btn.style.pointerEvents = "none"
+// }
+// exit.onclick = () => {
+//     window.location.reload(); //reload the current window
+// }
 
 // NEXT NEXT следующий тест при нажатии next_btn
 const next_btn = start__test.querySelector('.btn__test_next')
-next_btn.onclick = ()=>{
+next_btn.onclick = () => {
     if (que_count < questions.length - 1) {
         que_count++
         // que_icons++
@@ -54,6 +56,7 @@ next_btn.onclick = ()=>{
 // Функция для добавление тестов в блоках при нажатии start_btn
 function showQuestions(index) {
     const test__info = start__test.querySelector('.test__info') // блок вопросы тестов
+
     // Добавление тестов
     let test__title = '<h1 class="test__title">' + questions[index].question + '</h1>'
     let tests = '<button class="btn__test_one">' + questions[index].icons[0] + '<p class="btn__text">' + questions[index].options[0] + '</p></button>'
@@ -82,14 +85,14 @@ function optionSelected(answer) {
     } else {
         answer.classList.add('incorrect')
         console.log('Answer is Wrong')
-        
+
         // если ответ не правилный то автоматом выбераем правилный
         for (i = 0; i < allOptions; i++) {
             if (statr__tests.children[i].textContent == correctAnswer) {
-                statr__tests.children[i].setAttribute("class", "btn__test_one correct")               
+                statr__tests.children[i].setAttribute("class", "btn__test_one correct")
             }
         }
-    }    
+    }
     // при выборе ответа отключаем выбор другого 
     for (i = 0; i < allOptions; i++) {
         statr__tests.children[i].classList.add('disabled')
@@ -97,21 +100,32 @@ function optionSelected(answer) {
     next_btn.style.pointerEvents = "auto"
 }
 
-function showResultbox() {
-    choose__test.style.display = 'none'
-    start__test.style.display = 'none'
-    results.classList.add('module__one')
-    const resultInfo = results.querySelector('.module__status_active')
-    if (resultScore >= 0) {
-        let resulthtml = `<span class="status__active">`+ resultScore +` / `+ questions.length +`</span>`
-        resultInfo.insertAdjacentHTML('beforeend', resulthtml)
-    }
-   
-    let statusLine = resultScore * (100 / questions.length)
-    console.log(statusLine);
-    console.log(moduleStatus);
-    moduleStatus.style.width = statusLine + '%'
+function showResultbox(e) {
+    // choose__test.style.display = 'none'
+    // start__test.style.display = 'none'
+    // results.classList.add('module__one')
+    // const resultInfo = results.querySelector('.module__status_active')
+    // if (resultScore >= 0) {
+    //     let resulthtml = `<span class="status__active">` + resultScore + ` / ` + questions.length + `</span>`
+    //     resultInfo.insertAdjacentHTML('beforeend', resulthtml)
+    // }
+
+    // let statusLine = resultScore * (100 / questions.length)
+    // moduleStatus.style.width = statusLine + '%'
+    // moduleStatus.style.transition = '5s'
+
+    
+    btn__vies_results.classList.remove('results')
+    next_btn.style.pointerEvents = "none"
+    btn__vies_results.style.pointerEvents = "auto"
+
+    localStorage.setItem('scoreModule1', JSON.stringify(resultScore))
+    localStorage.setItem('queLengthModule1', JSON.stringify(questions.length))
 }
+// кнопка показать результать
+btn__vies_results.addEventListener("click", function () {
+    location.href = "./main.html";
+});
 
 // кнопка without test
 const statr_button = document.querySelector('.statr__button').onclick = function () {
